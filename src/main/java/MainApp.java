@@ -1,8 +1,11 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class MainApp {
 
     public static void main(String[] args) {
+        
+
         Scanner scan = new Scanner(System.in);
         Menu menu = new Menu();
 
@@ -44,10 +47,10 @@ public class MainApp {
             parentMenu.printMenuItem();
             ShopSetting shopSettings = new ShopSetting();
             System.out.print("Enter your Choice : ");
-            
             choiceStr = Integer.parseInt(userInput.nextLine());
             switch (choiceStr) {
             case 1:
+                ShopSetting setting = new ShopSetting();
                 do {
                     System.out.println("<<Shop Settings>>");
                     parentMenu.getMenuItem(1).menu.printMenuItem();
@@ -56,15 +59,16 @@ public class MainApp {
                     switch (subMenuChoice) {
                     case 1:
                         System.out.println("<<Loading Data>>");
-
-                        
+                        setting.loadData();
                         break;
                     case 2:
                         System.out.println("<<Seting the Shop Name>>");
                         System.out.print("Enter the shop name: ");
-                        shopSettings.setShopName(null);
+                        shopSettings.setShopName(userInput.nextLine());
+                        setting.saveData();
                         break;
                     case 3:
+                        System.out.println("<<Setting Invoice Header>>");
 
                         break;
                     case 4:

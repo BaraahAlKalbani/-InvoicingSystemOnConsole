@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Invoice implements Serializable {
+    private ShopSetting setting;
+
     private String customerName;
     private String phoneNumber;
     private String invoiceDate;
