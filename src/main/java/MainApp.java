@@ -69,7 +69,14 @@ public class MainApp {
                         break;
                     case 3:
                         System.out.println("<<Setting Invoice Header>>");
-
+                        System.out.print("Enter the shop Tel: ");
+                        shopSettings.setTel(userInput.nextLine());
+                        System.out.print("Enter the shop Fax: ");
+                        shopSettings.setFax(userInput.nextLine());
+                        System.out.print("Enter the shop Email: ");
+                        shopSettings.setEmail(userInput.nextLine());
+                        System.out.print("Enter the shop Website: ");
+                        shopSettings.setWebsite(userInput.nextLine());
                         break;
                     case 4:
                         System.out.println("Going Back...");

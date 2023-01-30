@@ -2,8 +2,9 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Invoice implements Serializable {
-    private ShopSetting setting;
+   
 
+    private ShopSetting setting;
     private String customerName;
     private String phoneNumber;
     private String invoiceDate;
@@ -14,8 +15,10 @@ public class Invoice implements Serializable {
     private ArrayList<Item> items;
 
     // Constructor
-    public Invoice(String customerName, String phoneNumber, String invoiceDate, int numberOfItems, double totalAmount,
-            double paidAmount, double balance, ArrayList<Item> items) {
+    public Invoice(ShopSetting setting, String customerName, String phoneNumber, String invoiceDate, int numberOfItems,
+            double totalAmount, double paidAmount, double balance, ArrayList<Item> items) {
+        super();
+        this.setting = setting;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.invoiceDate = invoiceDate;
