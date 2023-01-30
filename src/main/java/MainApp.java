@@ -37,7 +37,6 @@ public class MainApp {
         parentMenu.addMenuItem(new MenuItem(7, "Program Statistics."));
         parentMenu.addMenuItem(new MenuItem(8, " Exit."));
 
-
         Scanner userInput = new Scanner(System.in);
         Integer choiceStr, subMenuChoice = 0;
 
@@ -53,14 +52,23 @@ public class MainApp {
                     parentMenu.getMenuItem(1).menu.printMenuItem();
                     System.out.print("Enter your Choice : ");
                     subMenuChoice = Integer.parseInt(userInput.nextLine());
-                    if (subMenuChoice == 1) {
+                    switch (subMenuChoice) {
+                    case 1:
 
-                    } else if (subMenuChoice == 2) {
+                        break;
+                    case 2:
 
-                    } else if (subMenuChoice == 3) {
+                        break;
+                    case 3:
 
-                    } else if (subMenuChoice != 4) {
+                        break;
+                    case 4:
+                        System.out.println("Going Back...");
+                        break;
+
+                    default:
                         System.out.println("Invalid Input!!!");
+                        break;
                     }
 
                 } while (subMenuChoice != 4);
@@ -71,19 +79,27 @@ public class MainApp {
                     parentMenu.getMenuItem(2).menu.printMenuItem();
                     System.out.print("Enter your Choice : ");
                     subMenuChoice = Integer.parseInt(userInput.nextLine());
-                    if (subMenuChoice == 1) {
+                    switch (subMenuChoice) {
+                    case 1:
 
-                    } else if (subMenuChoice == 2) {
+                        break;
+                    case 2:
 
-                    } else if (subMenuChoice == 3) {
+                        break;
+                    case 3:
 
-                    } else if (subMenuChoice == 4) {
+                        break;
+                    case 4:
 
-                    }
-                    else if (subMenuChoice != 5) {
+                        break;
+                    case 5:
+                        System.out.println("Going Back...");
+                        break;
+
+                    default:
                         System.out.println("Invalid Input!!!");
+                        break;
                     }
-
                 } while (subMenuChoice != 5);
 
                 break;
