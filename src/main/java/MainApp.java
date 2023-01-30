@@ -19,7 +19,7 @@ public class MainApp {
         Menu ManageShopItemsSubMenu = new Menu();
 
         ManageShopItemsSubMenu.addMenuItem(new MenuItem(1, "Add Items."));
-        ManageShopItemsSubMenu.addMenuItem(new MenuItem(2, "Delete Items."));
+        ManageShopItemsSubMenu.addMenuItem(new MenuItem(2, "Delete Item."));
         ManageShopItemsSubMenu.addMenuItem(new MenuItem(3, "Change Item Price."));
         ManageShopItemsSubMenu.addMenuItem(new MenuItem(4, "Report All Items."));
         ManageShopItemsSubMenu.addMenuItem(new MenuItem(5, "Go Back."));
@@ -31,7 +31,7 @@ public class MainApp {
         parentMenu.addMenuItem(ShopSettingMenuItem);
         parentMenu.addMenuItem(ManageShopMenuItem);
 
-        parentMenu.addMenuItem(new MenuItem(3, "Create New Invoice (Invoices should be save/serialized)"));
+        parentMenu.addMenuItem(new MenuItem(3, "Create New Invoice"));
         parentMenu.addMenuItem(new MenuItem(4, "Report - Statistics (No Of Items, No of Invoices, Total Sales)."));
         parentMenu.addMenuItem(new MenuItem(5, "Report - All Invoices."));
         parentMenu.addMenuItem(new MenuItem(6, "Search Invoice."));
@@ -39,10 +39,14 @@ public class MainApp {
         parentMenu.addMenuItem(new MenuItem(8, " Exit."));
 
         Scanner userInput = new Scanner(System.in);
+        
+        ManageShopItems manageShopItems = new ManageShopItems();
+        ShopSetting shopSettings = new ShopSetting();
+
+        
         Integer choiceStr, subMenuChoice = 0;
         do {
             parentMenu.printMenuItem();
-            ShopSetting shopSettings = new ShopSetting();
             System.out.print("Enter your Choice : ");
             choiceStr = Integer.parseInt(userInput.nextLine());
             switch (choiceStr) {
@@ -55,7 +59,8 @@ public class MainApp {
                     switch (subMenuChoice) {
                     case 1:
                         System.out.println("<<Loading Data>>");
-                        shopSettings.loadData();
+                        shopSettings = shopSettings.loadData();
+                        manageShopItems.loadData();
                         break;
                     case 2:
                         System.out.println("<<Seting the Shop Name>>");
@@ -95,16 +100,26 @@ public class MainApp {
                     subMenuChoice = Integer.parseInt(userInput.nextLine());
                     switch (subMenuChoice) {
                     case 1:
-
+                        System.out.println("<<Add Item>>");
+                        manageShopItems.addItem();
                         break;
                     case 2:
-
+                        System.out.println("<<Delete Item>>");
+                        System.out.print("Enter Item ID: ");
+                        Integer ItemID = Integer.parseInt(userInput.nextLine());
+                        manageShopItems.deleteItemById(ItemID);
                         break;
                     case 3:
-
+                        System.out.println("<<Change Item Price.>>");
+                        System.out.print("Enter Item ID: ");
+                        Integer ItemID2 = Integer.parseInt(userInput.nextLine());
+                        System.out.print("Enter the New Unit Price: ");
+                        Double newPrice = Double.parseDouble(userInput.nextLine());
+                        manageShopItems.changeItemPrice(ItemID2, newPrice);
                         break;
                     case 4:
-
+                        System.out.println("<<Report All Items>>");
+                        manageShopItems.showAllItems();
                         break;
                     case 5:
                         System.out.println("Going Back...");
@@ -119,7 +134,7 @@ public class MainApp {
                 break;
             case 3:
                 System.out.println("<<Create New Invoice>>");
-
+                
                 break;
             case 4:
                 System.out.println("<<Report - Statistics>>");

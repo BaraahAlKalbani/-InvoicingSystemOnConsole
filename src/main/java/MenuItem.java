@@ -2,10 +2,7 @@
  * 
  */
 
-/**
- * @author LAP-6
- *
- */
+
 /**
  * Class to represent a menu item
  */

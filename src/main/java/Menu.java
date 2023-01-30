@@ -1,13 +1,6 @@
 import java.util.*;
 
-/**
- * 
- */
 
-/**
- * @author LAP-6
- *
- */
 public class Menu {
     ArrayList<MenuItem> listOfMenuItems = new ArrayList<MenuItem>();
 

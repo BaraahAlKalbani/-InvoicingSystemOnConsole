@@ -1,19 +1,29 @@
 import java.io.*;
+import java.util.*;
 
 class Item implements Serializable {
     private int itemID;
     private String itemName;
-    private int unitPrice;
+    private double unitPrice;
     private int quantity;
-    private int qtyAmount;
+    private double qtyAmount;
 
     // Constructor
-    public Item(int itemID, String itemName, int unitPrice, int quantity) {
+    public Item(int itemID, String itemName, double unitPrice, int quantity) {
+        
         this.itemID = itemID;
         this.itemName = itemName;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.qtyAmount = unitPrice * quantity;
+    }
+    public Item(int itemID, String itemName, double unitPrice, int quantity,Double priceByQty) {
+        
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.qtyAmount = priceByQty;
     }
     // Getters and Setters
 
@@ -25,7 +35,7 @@ class Item implements Serializable {
         return itemName;
     }
 
-    public int getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
@@ -33,7 +43,7 @@ class Item implements Serializable {
         return quantity;
     }
 
-    public int getQtyAmount() {
+    public double getQtyAmount() {
         return qtyAmount;
     }
 
@@ -45,8 +55,8 @@ class Item implements Serializable {
         this.itemName = itemName;
     }
 
-    public void setUnitPrice(int unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setUnitPrice(double newPrice) {
+        this.unitPrice = newPrice;
     }
 
     public void setQuantity(int quantity) {
@@ -55,5 +65,8 @@ class Item implements Serializable {
 
     public void setQtyAmount(int qtyAmount) {
         this.qtyAmount = qtyAmount;
+    }
+    public void setQtyAmount() {
+        this.qtyAmount = getUnitPrice()* getQuantity();
     }
 }

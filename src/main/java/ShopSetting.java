@@ -24,6 +24,7 @@ public class ShopSetting implements Serializable {
         this.website = website;
     }
 
+
     public ShopSetting loadData() {
         final String shopSetting_File = "data/shopSettingData.json";
         try {
@@ -42,6 +43,7 @@ public class ShopSetting implements Serializable {
             return null;
         }
     }
+    
 
     public void saveData(ShopSetting shopSettings) {
         Gson gson = new Gson();
@@ -56,14 +58,14 @@ public class ShopSetting implements Serializable {
             // TODO: handle exception
             System.out.println("Error creating file: " + e.getMessage());
         }
-        try (FileWriter writer = new FileWriter(shopSetting_File)) {
-            writer.write(json);
-        } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
-        }
+       
 
-    }
-   
+            try (FileWriter writer = new FileWriter(shopSetting_File)) {
+                gson.toJson(shopSettings, writer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     public String getShopName() {
         return shopName;
