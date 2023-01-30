@@ -37,12 +37,13 @@ public class MainApp {
         parentMenu.addMenuItem(new MenuItem(7, "Program Statistics."));
         parentMenu.addMenuItem(new MenuItem(8, " Exit."));
 
-        parentMenu.printMenuItem();
 
         Scanner userInput = new Scanner(System.in);
         Integer choiceStr, subMenuChoice = 0;
 
         do {
+            parentMenu.printMenuItem();
+
             System.out.print("Enter your Choice : ");
             choiceStr = Integer.parseInt(userInput.nextLine());
             switch (choiceStr) {
@@ -87,25 +88,33 @@ public class MainApp {
 
                 break;
             case 3:
+                System.out.println("<<Create New Invoice>>");
 
                 break;
             case 4:
+                System.out.println("<<Report - Statistics>>");
 
                 break;
             case 5:
+                System.out.println("<<Report - All Invoices>>");
 
                 break;
             case 6:
+                System.out.println("<<Search Invoice>>");
 
                 break;
             case 7:
+                System.out.println("<<Program Statistics>>");
 
                 break;
             case 8:
+                System.out.println("<<EXITING PROGRAM!!!>>");
 
                 break;
 
             default:
+                System.out.println("Invalid Input!!!");
+
                 break;
             }
         } while (choiceStr != 8);

@@ -11,7 +11,7 @@ public class Invoice implements Serializable {
     private double balance;
     private ArrayList<Item> items;
 
-// Constructor
+    // Constructor
     public Invoice(String customerName, String phoneNumber, String invoiceDate, int numberOfItems, double totalAmount,
             double paidAmount, double balance, ArrayList<Item> items) {
         this.customerName = customerName;
@@ -24,7 +24,7 @@ public class Invoice implements Serializable {
         this.items = items;
     }
 
-// Getters and Setters
+    // Getters and Setters
     public String getCustomerName() {
         return customerName;
     }

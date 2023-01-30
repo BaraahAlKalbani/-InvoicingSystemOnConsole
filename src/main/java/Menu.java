@@ -9,7 +9,6 @@ import java.util.*;
  *
  */
 public class Menu {
-    String title;
     ArrayList<MenuItem> listOfMenuItems = new ArrayList<MenuItem>();
 
     public Menu() {
@@ -21,12 +20,8 @@ public class Menu {
     }
 
     public void printMenuItem() {
-
-        if (title != null) {
-            System.out.println(title);
-        }
         for (MenuItem currItem : listOfMenuItems) {
-            System.out.println(currItem.id + " : " + currItem.description);
+            System.out.println(currItem.id + " - " + currItem.description);
         }
 
     }

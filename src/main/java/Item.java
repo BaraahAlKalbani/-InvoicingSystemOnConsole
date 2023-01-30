@@ -7,6 +7,7 @@ class Item implements Serializable {
     private int quantity;
     private int qtyAmount;
 
+    // Constructor
     public Item(int itemID, String itemName, int unitPrice, int quantity) {
         this.itemID = itemID;
         this.itemName = itemName;
@@ -14,6 +15,7 @@ class Item implements Serializable {
         this.quantity = quantity;
         this.qtyAmount = unitPrice * quantity;
     }
+    // Getters and Setters
 
     public int getItemID() {
         return itemID;
