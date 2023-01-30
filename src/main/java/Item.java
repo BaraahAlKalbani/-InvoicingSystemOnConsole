@@ -1,56 +1,57 @@
-import java.io.Serializable;
+import java.io.*;
 
-public class Item implements Serializable {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+class Item implements Serializable {
     private int itemID;
     private String itemName;
-    private double unitPrice;
+    private int unitPrice;
     private int quantity;
+    private int qtyAmount;
 
-    public Item(int itemID, String itemName, double unitPrice, int quantity) {
+    public Item(int itemID, String itemName, int unitPrice, int quantity) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
+        this.qtyAmount = unitPrice * quantity;
     }
 
     public int getItemID() {
         return itemID;
     }
 
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
-    }
-
     public String getItemName() {
         return itemName;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public double getUnitPrice() {
+    public int getUnitPrice() {
         return unitPrice;
-    }
-
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
+    public int getQtyAmount() {
+        return qtyAmount;
+    }
+
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public void setUnitPrice(int unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public double getAmount() {
-        return this.unitPrice * this.quantity;
+    public void setQtyAmount(int qtyAmount) {
+        this.qtyAmount = qtyAmount;
     }
 }
