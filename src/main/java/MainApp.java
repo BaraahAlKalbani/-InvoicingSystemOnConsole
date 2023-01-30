@@ -42,8 +42,9 @@ public class MainApp {
 
         do {
             parentMenu.printMenuItem();
-
+            ShopSetting shopSettings = new ShopSetting();
             System.out.print("Enter your Choice : ");
+            
             choiceStr = Integer.parseInt(userInput.nextLine());
             switch (choiceStr) {
             case 1:
@@ -54,10 +55,14 @@ public class MainApp {
                     subMenuChoice = Integer.parseInt(userInput.nextLine());
                     switch (subMenuChoice) {
                     case 1:
+                        System.out.println("<<Loading Data>>");
 
+                        
                         break;
                     case 2:
-
+                        System.out.println("<<Seting the Shop Name>>");
+                        System.out.print("Enter the shop name: ");
+                        shopSettings.setShopName(null);
                         break;
                     case 3:
 
