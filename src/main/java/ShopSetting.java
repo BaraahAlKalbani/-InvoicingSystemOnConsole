@@ -1,15 +1,16 @@
 import java.io.*;
+import java.util.jar.Attributes.Name;
 
 import com.google.gson.Gson;
 
 public class ShopSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String shopName;
-    private String tel;
-    private String fax;
-    private String email;
-    private String website;
+     String shopName;
+     String tel;
+     String fax;
+     String email;
+     String website;
 
     public ShopSetting() {
         // default constructor
@@ -28,7 +29,6 @@ public class ShopSetting implements Serializable {
         try {
             File settingsFile = new File(shopSetting_File);
             if (settingsFile.createNewFile()) {
-                System.out.println("shopSetting_File created successfully");
             }
 
         } catch (Exception e) {
@@ -43,24 +43,27 @@ public class ShopSetting implements Serializable {
         }
     }
 
-    public void saveData() {
+    public void saveData(ShopSetting shopSettings) {
         Gson gson = new Gson();
+        String json = gson.toJson(shopSettings);
         final String shopSetting_File = "data/shopSettingData.json";
         try {
             File settingsFile = new File(shopSetting_File);
             if (settingsFile.createNewFile()) {
-                System.out.println("shopSetting_File created successfully");
             }
 
         } catch (Exception e) {
             // TODO: handle exception
+            System.out.println("Error creating file: " + e.getMessage());
         }
         try (FileWriter writer = new FileWriter(shopSetting_File)) {
-            gson.toJson(this, writer);
+            writer.write(json);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error writing to file: " + e.getMessage());
         }
+
     }
+   
 
     public String getShopName() {
         return shopName;

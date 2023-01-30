@@ -4,8 +4,6 @@ import java.util.Scanner;
 public class MainApp {
 
     public static void main(String[] args) {
-        
-
         Scanner scan = new Scanner(System.in);
         Menu menu = new Menu();
 
@@ -42,7 +40,6 @@ public class MainApp {
 
         Scanner userInput = new Scanner(System.in);
         Integer choiceStr, subMenuChoice = 0;
-
         do {
             parentMenu.printMenuItem();
             ShopSetting shopSettings = new ShopSetting();
@@ -50,7 +47,6 @@ public class MainApp {
             choiceStr = Integer.parseInt(userInput.nextLine());
             switch (choiceStr) {
             case 1:
-                ShopSetting setting = new ShopSetting();
                 do {
                     System.out.println("<<Shop Settings>>");
                     parentMenu.getMenuItem(1).menu.printMenuItem();
@@ -59,13 +55,14 @@ public class MainApp {
                     switch (subMenuChoice) {
                     case 1:
                         System.out.println("<<Loading Data>>");
-                        setting.loadData();
+                        shopSettings.loadData();
                         break;
                     case 2:
                         System.out.println("<<Seting the Shop Name>>");
                         System.out.print("Enter the shop name: ");
-                        shopSettings.setShopName(userInput.nextLine());
-                        setting.saveData();
+                        String nameString = userInput.nextLine();
+                        shopSettings.setShopName(nameString);
+                        shopSettings.saveData(shopSettings);
                         break;
                     case 3:
                         System.out.println("<<Setting Invoice Header>>");
@@ -77,6 +74,7 @@ public class MainApp {
                         shopSettings.setEmail(userInput.nextLine());
                         System.out.print("Enter the shop Website: ");
                         shopSettings.setWebsite(userInput.nextLine());
+                        shopSettings.saveData(shopSettings);
                         break;
                     case 4:
                         System.out.println("Going Back...");
