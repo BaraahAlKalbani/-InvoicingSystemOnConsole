@@ -134,7 +134,7 @@ public class MainApp {
                 break;
             case 3:
                 System.out.println("<<Create New Invoice>>");
-                
+               
                 break;
             case 4:
                 System.out.println("<<Report - Statistics>>");
