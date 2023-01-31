@@ -1,4 +1,3 @@
-import java.awt.Window.Type;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +18,7 @@ public class Invoice {
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private ArrayList<ShopSetting> header;
+    private ShopSetting header;
     private String customerName;
     private String phoneNumber;
     private String invoiceDate;
@@ -30,7 +29,7 @@ public class Invoice {
     ArrayList<Item> AllShopitems;
     ArrayList<Invoice> invoices;
 
-    public Invoice(ArrayList<ShopSetting> header, String customerName, String phoneNumber, String invoiceDate,
+    public Invoice(ShopSetting header, String customerName, String phoneNumber, String invoiceDate,
             ArrayList<Item> items) {
         this.header = header;
         this.customerName = customerName;
@@ -46,80 +45,77 @@ public class Invoice {
     }
 
     public void addNewInvoice(Invoice newInvoice) {
-        final String shopSetting_File = "data/Invoices.json";
-        try {
-            File settingsFile = new File(shopSetting_File);
-            if (settingsFile.createNewFile()) {
-            }
+        public void addNewInvoice(Invoice newInvoice) {
+            String invoicesFile = "data/Invoices.json";
+            String shopItemsFile = "data/Items.json";
+            String shopSettingDataFile = "data/shopSettingData.json";
 
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        ArrayList<Item> AllShopitems = new ArrayList<>();
-        try (FileReader reader = new FileReader("data/Items.json")) {
-            AllShopitems = gson.fromJson(reader, new TypeToken<ArrayList<Item>>() {
-            }.getType());
-            if (AllShopitems == null) {
-                System.out.println("Shop Item list is empty");
+            Gson gson = new Gson();
+            ArrayList<Invoice> invoices = new ArrayList<>();
+            ArrayList<Item> invoiceItems = new ArrayList<>();
+            ShopSetting header = null;
 
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
-        }
-        try (FileReader reader = new FileReader("data/shopSettingData.json")) {
-            header = gson.fromJson(reader, new TypeToken<ArrayList<ShopSetting>>() {
-            }.getType());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader reader = new FileReader("data/Invoices.json")) {
-            invoices = gson.fromJson(reader, new TypeToken<ArrayList<ShopSetting>>() {
-            }.getType());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Scanner userInput = new Scanner(System.in);
-        System.out.print("Enter customer name: ");
-        String customerName = userInput.nextLine();
-        System.out.print("Enter customer phone number: ");
-        String phoneNumber = userInput.nextLine();
-        System.out.print("Enter Date: ");
-        String dateString = userInput.nextLine();
-        // Get item information
-        System.out.print("Enter number of items: ");
-        Integer numberOfItems = Integer.parseInt(userInput.nextLine());
-        invoiceItems = new ArrayList<>();
-        for (int i = 0; i < numberOfItems; i++) {
-            System.out.print("Enter item id: ");
-            int itemId = Integer.parseInt(userInput.nextLine());
-            Iterator<Item> iterator = AllShopitems.iterator();
-            Boolean idFound = false;
-            while (iterator.hasNext()) {
-                Item item = iterator.next();
-                if (item.getItemID() == itemId) {
-                    invoiceItems.add(item);
-                    idFound = true;
-                    System.out.println("Item added successfully.");
-                    break;
+            try (FileReader reader = new FileReader(shopItemsFile)) {
+                ArrayList<Item> allShopItems = gson.fromJson(reader, new TypeToken<ArrayList<Item>>() {}.getType());
+                if (allShopItems == null || allShopItems.isEmpty()) {
+                    System.out.println("Error reading file: Shop item list is empty");
+                    return;
                 }
-            }
-            if (!idFound) {
-                System.out.println("Item Not Found!!.");
-            }
-        }
 
-        newInvoice = new Invoice(header, customerName, phoneNumber, dateString, invoiceItems);
-        invoices.add(newInvoice);
+                Scanner userInput = new Scanner(System.in);
+                System.out.print("Enter customer name: ");
+                String customerName = userInput.nextLine();
+                System.out.print("Enter customer phone number: ");
+                String phoneNumber = userInput.nextLine();
+                System.out.print("Enter date: ");
+                String dateString = userInput.nextLine();
+                System.out.print("Enter number of items: ");
+                int numberOfItems = Integer.parseInt(userInput.nextLine());
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Invoices.json"))) {
-            gson.toJson(invoices, bw);
-        } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
-            return;
+                for (int i = 0; i < numberOfItems; i++) {
+                    System.out.print("Enter item id: ");
+                    int itemId = Integer.parseInt(userInput.nextLine());
+                    Item item = allShopItems.stream().filter(it -> it.getItemID() == itemId).findFirst().orElse(null);
+                    if (item != null) {
+                        invoiceItems.add(item);
+                        System.out.println("Item added successfully.");
+                    } else {
+                        System.out.println("Item not found.");
+                    }
+                }
+
+                try (FileReader reader2 = new FileReader(shopSettingDataFile)) {
+                    header = gson.fromJson(reader2, ShopSetting.class);
+                } catch (IOException e) {
+                    System.out.println("Error reading file: " + e.getMessage());
+                    return;
+                }
+
+                newInvoice = new Invoice(header, customerName, phoneNumber, dateString, invoiceItems);
+
+                try (FileReader reader3 = new FileReader(invoicesFile)) {
+                    invoices = gson.fromJson(reader3, new TypeToken<ArrayList<Invoice>>() {}.getType());
+                } catch (FileNotFoundException e) {
+                    System.out.println("File not found: " + e.getMessage());
+                } catch (IOException e) {
+                    System.out.println("Error reading file: " + e.getMessage());
+                    return;
+                }
+                if(invoices == null)
+                    invoices = new ArrayList<>();
+                invoices.add(newInvoice);
+
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(invoicesFile))) {
+                    gson.toJson(invoices, bw);
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
     }
 
@@ -148,25 +144,30 @@ public class Invoice {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        int numberOfInvoices = invoices.size();
-        int numberOfItems = 0;
-        double totalSales = 0;
-        for (Invoice invoice : invoices) {
-            numberOfItems += invoice.getItems().size();
-            totalSales += invoice.getTotalAmount();
+        if (invoices != null) {
+            int numberOfInvoices = invoices.size();
+            int numberOfItems = 0;
+            double totalSales = 0;
+            for (Invoice invoice : invoices) {
+                numberOfItems += invoice.getItems().size();
+                totalSales += invoice.getTotalAmount();
+            }
+            System.out.println("Number of invoices: " + numberOfInvoices);
+            System.out.println("Number of items: " + numberOfItems);
+            System.out.println("Total sales: " + totalSales);
+        } else {
+            System.out.println("Number of invoices: " + 0);
+            System.out.println("Number of items: " + 0);
+            System.out.println("Total sales: " + 0);
         }
 
-        System.out.println("Number of invoices: " + numberOfInvoices);
-        System.out.println("Number of items: " + numberOfItems);
-        System.out.println("Total sales: " + totalSales);
     }
 
-    public ArrayList<ShopSetting> getHeader() {
+    public ShopSetting getHeader() {
         return header;
     }
 
-    public void setHeader(ArrayList<ShopSetting> header) {
+    public void setHeader(ShopSetting header) {
         this.header = header;
     }
 
