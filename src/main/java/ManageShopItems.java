@@ -191,6 +191,24 @@ class ManageShopItems {
             System.out.println(item.getItemID() + "\t|" + item.getItemName() + "\t\t|" + item.getUnitPrice() + "\t\t|" + item.getQuantity()+ "\t\t|" +item.getQtyAmount());
         }
     }
+    public ArrayList<Item> getAllShopItems() {
+        final String itemsListFile = "data/Items.json";
+        File itemsFile = new File(itemsListFile);
+
+        try (FileReader reader = new FileReader(itemsListFile)) {
+            items = gson.fromJson(reader, new TypeToken<ArrayList<Item>>() {}.getType());
+            if (items == null) {
+                System.out.println("Item list is empty");
+                return new ArrayList<>();
+            }
+            return items;
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        return items;
+
+
+    }
 
 
 }

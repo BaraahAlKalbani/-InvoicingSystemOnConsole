@@ -139,7 +139,7 @@ public class MainApp {
                 break;
             case 3:
                 System.out.println("<<Create New Invoice>>");
-                invoice.addInvoice();
+                invoice.addInvoice(manageShopItems.getAllShopItems());
                 break;
             case 4:
                 System.out.println("<<Report - Statistics>>");

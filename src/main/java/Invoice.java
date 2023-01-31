@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class Invoice {
     private double totalAmount;
     private double paidAmount;
     private double balance;
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<>();
 
     public Invoice(String customerName, String phoneNumber, String invoiceDate, int numberOfItems, double totalAmount, double paidAmount, double balance, ArrayList<Item> items) {
         this.customerName = customerName;
@@ -31,7 +33,8 @@ public class Invoice {
     public Invoice() {
         // TODO Auto-generated constructor stub
     }
-    public void addInvoice() {
+    public void addInvoice(ArrayList<Item> shopItems ) {
+        
         // Take inputs from the user for the fields
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Customer Full Name: ");
@@ -40,32 +43,42 @@ public class Invoice {
         String phoneNumber = sc.nextLine();
         System.out.print("Enter Invoice Date (yyyy-mm-dd): ");
         String invoiceDate = sc.nextLine();
+        ManageShopItems manageShopItems = new ManageShopItems();
 
         // Add items to the invoice
-        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Item> invoiceItems = new ArrayList<>();
         while (true) {
             System.out.print("Enter Item ID (Enter 0 to finish): ");
             Integer itemId = Integer.parseInt(sc.nextLine());
             if (itemId == 0) {
                 break;
             }
-            System.out.print("Enter Item Name: ");
-            String itemName = sc.nextLine();
-            System.out.print("Enter Unit Price: ");
-            double unitPrice = sc.nextDouble();
-            System.out.print("Enter Quantity: ");
-            int quantity = sc.nextInt();
+            
+            
+            boolean itemFound = false;
+            for (Item item : shopItems) {
+                if (item.getItemID() == itemId) {
+                    System.out.print("Enter Quantity: ");
+                    Integer quantity = Integer.parseInt(sc.nextLine());
+                    item.setQtyAmount();
+                    items.add(item);
+                    itemFound = true;
+                    System.out.println("Item added to the Invoice successfully.");
+                    break;
+                }
+            }
 
-            Item item = new Item(itemId, itemName, unitPrice, quantity);
-            items.add(item);
-        }
+            if (!itemFound) {
+                System.out.println("Item not found.");
+                
+            }
+            
 
         // Set the fields of the invoice
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.invoiceDate = invoiceDate;
         this.items = items;
-
         // Calculate the total amount and balance
         double totalAmount = 0;
         for (Item item : items) {
@@ -73,16 +86,17 @@ public class Invoice {
         }
         this.totalAmount = totalAmount;
         this.balance = totalAmount;
-
+        ArrayList<Invoice> invoiceArrayList = new ArrayList<>();
+        invoiceArrayList.add(this);
         // Serialize the invoice and save it to a .json file
-        String jsonString = gson.toJson(this);
+        String jsonString = gson.toJson(invoiceArrayList);
         try {
             FileWriter writer = new FileWriter("data/invoices.json");
             writer.write(jsonString);
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.out.print(e);
+        }}
     }
 
     public String getCustomerName() {
