@@ -1,5 +1,10 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
 
 public class MainApp {
 
@@ -134,7 +139,7 @@ public class MainApp {
                 break;
             case 3:
                 System.out.println("<<Create New Invoice>>");
-                invoice.addNewInvoice(invoice);
+                invoice.addInvoice();
                 break;
             case 4:
                 System.out.println("<<Report - Statistics>>");
