@@ -39,11 +39,11 @@ public class MainApp {
         parentMenu.addMenuItem(new MenuItem(8, " Exit."));
 
         Scanner userInput = new Scanner(System.in);
-        
+
         ManageShopItems manageShopItems = new ManageShopItems();
         ShopSetting shopSettings = new ShopSetting();
+        Invoice invoice = new Invoice();
 
-        
         Integer choiceStr, subMenuChoice = 0;
         do {
             parentMenu.printMenuItem();
@@ -134,11 +134,11 @@ public class MainApp {
                 break;
             case 3:
                 System.out.println("<<Create New Invoice>>");
-               
+                invoice.addNewInvoice(invoice);
                 break;
             case 4:
                 System.out.println("<<Report - Statistics>>");
-
+                invoice.generateStatistics();
                 break;
             case 5:
                 System.out.println("<<Report - All Invoices>>");
