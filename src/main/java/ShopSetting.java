@@ -1,5 +1,7 @@
+/**
+ * @author Bara'ah Nasser
+ */
 import java.io.*;
-import java.util.jar.Attributes.Name;
 
 import com.google.gson.Gson;
 

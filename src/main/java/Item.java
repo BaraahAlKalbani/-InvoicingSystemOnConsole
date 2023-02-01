@@ -1,3 +1,6 @@
+/**
+ * @author Bara'ah Nasser
+ */
 import java.util.Random;
 
 public class Item {

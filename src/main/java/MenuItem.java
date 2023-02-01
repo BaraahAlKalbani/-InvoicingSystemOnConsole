@@ -1,4 +1,7 @@
 /**
+ * @author Bara'ah Nasser
+ */
+/**
  * Class to represent a menu item
  */
 public class MenuItem {
