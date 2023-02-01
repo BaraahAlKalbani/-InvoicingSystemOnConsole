@@ -13,8 +13,12 @@ public class MainApp {
     public static void main(String[] args) {
         Scanner userInput = new Scanner(System.in); // Scanner for user input
         Menu MenuShopSettingSubMenu = new Menu(); // Submenu for Shop Settings
+
+        // Initialize a map to store the program statistics
+        HashMap<String, Integer> programStatistics = new HashMap<>();
+
         // Adding menu items to Shop Settings submenu
-        MenuShopSettingSubMenu.addMenuItem(new MenuItem(1, "Load Data (Items and invoices)."));
+        MenuShopSettingSubMenu.addMenuItem(new MenuItem(1, "Load Data."));
         MenuShopSettingSubMenu.addMenuItem(new MenuItem(2, "Set Shop Name."));
         MenuShopSettingSubMenu.addMenuItem(new MenuItem(3, "Set Invoice Header (Tel / Fax / Email / Website)."));
         MenuShopSettingSubMenu.addMenuItem(new MenuItem(4, "Go Back."));
@@ -38,7 +42,7 @@ public class MainApp {
         parentMenu.addMenuItem(ShopSettingMenuItem);
         parentMenu.addMenuItem(ManageShopMenuItem);
         parentMenu.addMenuItem(new MenuItem(3, "Create New Invoice"));
-        parentMenu.addMenuItem(new MenuItem(4, "Report - Statistics (No Of Items, No of Invoices, Total Sales)."));
+        parentMenu.addMenuItem(new MenuItem(4, "Report - Statistics."));
         parentMenu.addMenuItem(new MenuItem(5, "Report - All Invoices."));
         parentMenu.addMenuItem(new MenuItem(6, "Search Invoice."));
         parentMenu.addMenuItem(new MenuItem(7, "Program Statistics."));
@@ -51,12 +55,21 @@ public class MainApp {
 
         Integer choiceStr = 0, subMenuChoice = 0; // Variables for user choices in the menu
         do {
+            System.out.println("\n<<Main Menu>>");
             // Display the parent menu and get user's choice
             parentMenu.printMenuItem();
             System.out.print("Enter your Choice : ");
             // Try to parse the user's input as an integer
             try {
                 choiceStr = Integer.parseInt(userInput.nextLine());
+                MenuItem selectedItem = parentMenu.getMenuItem(choiceStr);
+                String description = "MainMenu item  --> " + selectedItem.id + " : " + selectedItem.description;
+                // Update the program statistics
+                if (programStatistics.containsKey(description)) {
+                    programStatistics.put(description, programStatistics.get(description) + 1);
+                } else {
+                    programStatistics.put(description, 1);
+                }
             } catch (NumberFormatException e) {
                 // If the input is not an integer, show an error message
                 System.out.println("Invalid input. Please enter a valid integer.");
@@ -74,6 +87,14 @@ public class MainApp {
                     // Try to parse the user's input as an integer
                     try {
                         subMenuChoice = Integer.parseInt(userInput.nextLine());
+                        MenuItem selectedItem = parentMenu.getMenuItem(1).menu.getMenuItem(subMenuChoice);
+                        String description = "ShopSettingsMenu item  --> " + selectedItem.id + " : " + selectedItem.description;
+                        // Update the program statistics
+                        if (programStatistics.containsKey(description)) {
+                            programStatistics.put(description, programStatistics.get(description) + 1);
+                        } else {
+                            programStatistics.put(description, 1);
+                        }
                     } catch (NumberFormatException e) {
                         // If the input is not an integer, show an error message
                         System.out.println("Invalid input. Please enter a valid integer.");
@@ -83,7 +104,10 @@ public class MainApp {
                     switch (subMenuChoice) {
                     case 1:
                         System.out.println("<<Loading Data>>");
+                        // load shopSettings Data From File and save it into shopSettings custom object
                         shopSettings = shopSettings.loadData();
+                        // load Invoices list From File and save it into an array list
+                        ArrayList<Invoice> invoices = invoiceManager.loadInvoices();
                         break;
                     case 2:
                         System.out.println("<<Seting the Shop Name>>");
@@ -139,8 +163,8 @@ public class MainApp {
             // case 2 represents the sub-menu for Shop Settings
             case 2:
                 do {
-                    // Prints the Shop Settings sub-menu
-                    System.out.println("<<Shop Settings>>");
+                    // Prints the Manage Shop Items sub-menu
+                    System.out.println("<<Manage Shop Items>>");
                     parentMenu.getMenuItem(2).menu.printMenuItem();
 
                     // Prompts the user to enter their choice
@@ -149,6 +173,14 @@ public class MainApp {
                     try {
                         // Parses the user's input into an integer
                         subMenuChoice = Integer.parseInt(userInput.nextLine());
+                        MenuItem selectedItem = parentMenu.getMenuItem(2).menu.getMenuItem(subMenuChoice);
+                        String description = "ManageShopItemsMenu item --> " + selectedItem.id + " : " + selectedItem.description;
+                        // Update the program statistics
+                        if (programStatistics.containsKey(description)) {
+                            programStatistics.put(description, programStatistics.get(description) + 1);
+                        } else {
+                            programStatistics.put(description, 1);
+                        }
                     } catch (NumberFormatException e) {
                         // If the input is not an integer, prints an error message
                         System.out.println("Invalid input. Please enter a valid integer.");
@@ -240,11 +272,12 @@ public class MainApp {
                 break;
             case 7:
                 System.out.println("<<Program Statistics>>");
-                // Add code to display program statistics here
+                // display program statistics
+                parentMenu.printProgramStatistics(programStatistics);
+
                 break;
             case 8:
                 System.out.println("<<EXITING PROGRAM!!!>>");
-                // Add code to exit the program here
                 break;
             default:
                 System.out.println("Invalid Input!!!");

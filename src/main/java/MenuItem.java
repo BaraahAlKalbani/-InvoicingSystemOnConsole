@@ -34,7 +34,7 @@ public class MenuItem {
      * Print the menu item and its sub-menu (if any)
      */
     void printItem() {
-        System.out.println(this.id + " : " + this.description);
+        System.out.println(this.id + " > " + this.description);
         if (this.isAMenu()) {
             menu.printMenuItem();
         }

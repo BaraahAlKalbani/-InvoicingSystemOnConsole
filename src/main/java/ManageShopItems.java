@@ -153,7 +153,7 @@ class ManageShopItems {
                 break;
             }
         }
-     // Check if the item was not found
+        // Check if the item was not found
         if (!itemFound) {
             System.out.println("Item not found.");
             return;
@@ -169,6 +169,7 @@ class ManageShopItems {
 
     /**
      * Display a list of all items stored in a file
+     * 
      * @param itemsListFile the file path of the items list
      */
     public void showAllItems() {
@@ -178,7 +179,8 @@ class ManageShopItems {
 
         try (FileReader reader = new FileReader(itemsListFile)) {
             // Convert the contents of the file into a list of items using Gson library
-            items = gson.fromJson(reader, new TypeToken<ArrayList<Item>>() {}.getType());
+            items = gson.fromJson(reader, new TypeToken<ArrayList<Item>>() {
+            }.getType());
 
             // If the item list is empty, print a message and return
             if (items == null) {

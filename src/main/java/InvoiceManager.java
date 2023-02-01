@@ -72,7 +72,7 @@ public class InvoiceManager {
      * 
      * @return The list of invoices
      */
-    private static ArrayList<Invoice> loadInvoices() {
+    public static ArrayList<Invoice> loadInvoices() {
         File file = new File(INVOICE_FILE);
 
         ArrayList<Invoice> invoices = new ArrayList<>();
@@ -185,13 +185,13 @@ public class InvoiceManager {
         System.out.print(">> | <<Shop Tel Number : " + invoice.getHeader().getTel());
         System.out.print(">> | <<Shop Fax : " + invoice.getHeader().getFax());
         System.out.println(">> | <<Shop WebSite : " + invoice.getHeader().getWebsite() + ">>");
-        System.out.println("--- ---- ---");
+        System.out.println("---<>----<>------<>----<>---");
         System.out.println("Invoice ID: " + invoice.getInvoiceID());
         System.out.println("Invoice for Customer: " + invoice.getCustomerName());
         System.out.println("Phone Number: " + invoice.getPhoneNumber());
         System.out.println("Invoice Date: " + invoice.getInvoiceDate());
         System.out.println("Total Amount: " + invoice.getTotalAmount());
-        System.out.println("--- Items ---");
+        System.out.println("---<>----<>--- Items ---<>----<>---");
         System.out.println("ItemNo\t|Item ID\t|Item Name\tUnit Price\t|Quantity\t|qtyAmount");
         int ItemNumber = 1;
         for (Item item : invoice.getItems()) {
@@ -200,6 +200,6 @@ public class InvoiceManager {
                     + item.getUnitPrice() + "\t\t|" + item.getQuantity() + "\t\t|" + item.getQtyAmount());
             ItemNumber++;
         }
-        System.out.println("--- End of Invoice ---\n\n");
+        System.out.println("---<>----<>--- End of Invoice ---<>----<>---\n\n");
     }
 }
